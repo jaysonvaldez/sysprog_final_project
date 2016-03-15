@@ -7,7 +7,7 @@ sip.setapi('QVariant',2) #we need to include the sip module to support Python 2;
 
 import sys
 from my_crud2 import Ui_MainWindow #import main class from my_crud.py
-from crud_students_2 import Ui_frmSearch #import main class from crud_students_2.py
+from crud_students_2 import Ui_Dialog #import main class from crud_students_2.py
 from PyQt4 import QtSql, QtGui, QtCore #import all necessary modules
 
 #set the database connection
@@ -30,7 +30,7 @@ class MyCrud(QtGui.QMainWindow):
 		self.ui.setupUi(self)		
 		self.model=QtSql.QSqlQueryModel(self)		
 		
-		self.model.setQuery("select ") #complete this query. select all from the tbl_students table
+		self.model.setQuery("select * ") #complete this query. select all from the tbl_students table
 		self.record=self.model.record(0)
 		self.ui.txtId.setText(str(self.record.value("student_id")))
 		self.ui.txtFirstName.setText(self.record.value("fname"))
@@ -115,7 +115,7 @@ class MyCrud(QtGui.QMainWindow):
 		self.model.insertRows(0,1)
 
 	#research for this delete function. Hint: http://pyqt.sourceforge.net/Docs/PyQt4/qtsql.html#inserting-updating-and-deleting-records
-	def DeleteRecord(self):
+	#def DeleteRecord(self):
 
 		
 	def SearchRecord(self):
@@ -148,7 +148,7 @@ class FormSearch(QtGui.QDialog):
 	def __init__(self, parent=None):
 		super(FormSearch, self).__init__(parent)
 		QtGui.QWidget.__init__(self, parent)
-		self.ui = Ui_frmSearch()
+		self.ui = Ui_Dialog()
 		self.ui.setupUi(self)	
 		self.model = QtSql.QSqlTableModel(self)		
 		self.model.setTable("tbl_students")		
