@@ -13,10 +13,10 @@ from PyQt4 import QtSql, QtGui, QtCore #import all necessary modules
 #set the database connection
 def createConnection():
 	db = QtSql.QSqlDatabase.addDatabase('QMYSQL')
-	db.setHostName() #enter host name here enclosed in single quotes
-	db.setDatabaseName() #enter the name of the database enclosed in single quotes
-	db.setUserName() #enter the username for the exclusive account you created in Part 1 enclosed in single quotes
-	db.setPassword() #enter password for the exclusive account enclosed in single quotes
+	db.setHostName('localhost') #enter host name here enclosed in single quotes
+	db.setDatabaseName('groupjay') #enter the name of the database enclosed in single quotes
+	db.setUserName('root') #enter the username for the exclusive account you created in Part 1 enclosed in single quotes
+	db.setPassword('qwerty20') #enter password for the exclusive account enclosed in single quotes
 	db.open()
 	print (db.lastError().text())
 	return True
@@ -30,12 +30,10 @@ class MyCrud(QtGui.QMainWindow):
 		self.ui.setupUi(self)		
 		self.model=QtSql.QSqlQueryModel(self)		
 		
-		self.model.setQuery("select * ") #complete this query. select all from the tbl_students table
+		self.model.setQuery("select * from tbl_students") #complete this query. select all from the tbl_students table
 		self.record=self.model.record(0)
 		self.ui.txtId.setText(str(self.record.value("student_id")))
-		self.ui.txtFirstName.setText(self.record.value("fname"))
-		self.ui.txtLastName.setText(self.record.value("lname"))
-		
+			
 		self.model = QtSql.QSqlTableModel(self)
 		self.model.setTable("tbl_students")	
 		self.model.setEditStrategy(QtSql.QSqlTableModel.OnManualSubmit)
@@ -168,7 +166,7 @@ class FormSearch(QtGui.QDialog):
 	#Try to improve this code by also searching for the other fields aside from student_id	
 	def SearchRecord(self):
 		self.model.setFilter("student_id like '"+self.ui.txtSearch.text()+"%'")
-	
+		self.model.setFilter("lname like '"+self.ui.txtSearch.text()+"%'")
 	#Room for improvement: You can try and apply this upon "NO" Option in message boxes		
 	#def CancelChanges(self):
 		#self.model.revertAll()
